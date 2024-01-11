@@ -20,25 +20,33 @@ export default function PaymentPaypal({ products, setReload = f => f, reload = u
     const userID = isAuthenticated() && isAuthenticated().user._id
     const token = isAuthenticated() && isAuthenticated().token
 
+
     const getToken = (userID, token) => {
-        getMeToken(userID, token)
-            .then(info => {
-                console.log("INFORMATION", info);
-                if (info.error) {
-                    setInfo({ ...info, error: info.error })
-                }
-                else {
-                    const clientToken = info.clientToken
-                    // console.log(clientToken);
-                    setInfo({ clientToken })
-                }
-            })
-    }
+      if (products.length === 0) {
+        return; 
+      }
+
+      getMeToken(userID, token)
+        .then((info) => {
+          console.log("INFORMATION", info);
+          if (info.error) {
+            setInfo({ ...info, error: info.error });
+          } else {
+            const clientToken = info.clientToken;
+            setInfo({ clientToken });
+          }
+        })
+        .catch((error) => {
+          // Handle the error
+          console.error("Error getting PayPal token:", error);
+          setInfo({ ...info, error: "Error getting PayPal token" });
+        });
+    };
 
     useEffect(() => {
-        getToken(userID, token)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+      getToken(userID, token);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [products]);
 
 
 
