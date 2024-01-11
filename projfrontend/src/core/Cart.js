@@ -42,36 +42,36 @@ const Cart = () => {
     );
   };
 
-  const showCartContent = () => {
-    if (!isAuthenticated()) {
-      return (
-        <div>
-          <h3 className="text-white">Please login to view your cart.</h3>
-          <button
-            onClick={() => navigate("/signin")}
-            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 m-2 rounded-full focus:outline-none focus:shadow-outline-blue"
-          >
-            Login
-          </button>
-        </div>
-      );
-    }
-
+const showCartContent = () => {
+  if (!isAuthenticated()) {
     return (
-      <div className="lg:flex lg:space-x-6">
-        <div className="lg:w-1/2">
-          {products.length > 0 ? (
-            loadAllProducts(products)
-          ) : (
-            <h3>No products in cart</h3>
-          )}
-        </div>
-        <div className="lg:w-1/2 mt-4 lg:mt-0">
-          <PaymentPaypal products={products} setReload={setReload} />
-        </div>
+      <div>
+        <h3 className="text-white">Please login to view your cart.</h3>
+        <button
+          onClick={() => navigate("/signin")}
+          className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 m-2 rounded-full focus:outline-none focus:shadow-outline-blue"
+        >
+          Login
+        </button>
       </div>
     );
-  };
+  }
+
+  return (
+    <div className="lg:flex lg:space-x-6">
+      <div className="lg:w-1/2">
+        {products && products.length > 0 ? (
+          loadAllProducts(products)
+        ) : (
+          <h3>No products in cart</h3>
+        )}
+      </div>
+      <div className="lg:w-1/2 mt-4 lg:mt-0">
+        <PaymentPaypal products={products} setReload={setReload} />
+      </div>
+    </div>
+  );
+};
 
   return (
     <Base title="Cart Page" description="Ready to checkout">
