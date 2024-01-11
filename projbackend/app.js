@@ -42,12 +42,17 @@ app.use("/api", orderRoutes);
 app.use("/api", paymentBRoutes);
 
 
-
+app.get('/hello', (req, res) => {
+  const response = {
+    message: 'Hello, World!'
+  };
 
 //PORT
 const port = process.env.PORT;
 
 app.listen(port, () => {
+    
     console.log(`app is running at ${port}`);
+    
 })
 
